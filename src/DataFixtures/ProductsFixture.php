@@ -3,10 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Product;
+use App\Entity\ProductType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ProductsFixture extends Fixture
+class ProductsFixture extends Fixture implements DependentFixtureInterface
 {
     private const PRODUCTS_DATA = [
         [
@@ -88,18 +90,29 @@ class ProductsFixture extends Fixture
         ],
     ];
 
+    private const PRODUCT_TYPE_REFERENCES = [1 => 'pizza_type', 2 => 'topping_type'];
+
     public function load(ObjectManager $manager)
     {
         foreach (self::PRODUCTS_DATA as $productData) {
             $product = new Product();
             foreach ($productData as $productFieldName => $productFieldValue) {
                 $method = $this->getSetter($productFieldName);
+
+                if ($method === 'setProductType') {
+                    $productFieldValue = $this->getReference(self::PRODUCT_TYPE_REFERENCES[$productFieldValue]);
+                }
                 $product->$method($productFieldValue);
             }
             $manager->persist($product);
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [ProductTypeFixture::class];
     }
 
     /**

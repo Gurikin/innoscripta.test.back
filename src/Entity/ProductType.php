@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ProductTypes
+ * ProductType
  *
  * @ORM\Table(name="product_types")
  * @ORM\Entity
  */
-class ProductTypes
+class ProductType
 {
     /**
      * @var int

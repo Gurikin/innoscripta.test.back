@@ -50,9 +50,9 @@ class Product
     private $imageUrl;
 
     /**
-     * @var \ProductTypes
+     * @var ProductType
      *
-     * @ORM\ManyToOne(targetEntity="ProductTypes")
+     * @ORM\ManyToOne(targetEntity="ProductType")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_type", referencedColumnName="id")
      * })
@@ -132,17 +132,17 @@ class Product
     }
 
     /**
-     * @return \ProductTypes
+     * @return ProductType
      */
-    public function getProductType(): \ProductTypes
+    public function getProductType(): ProductType
     {
         return $this->productType;
     }
 
     /**
-     * @param \ProductTypes $productType
+     * @param ProductType $productType
      */
-    public function setProductType(\ProductTypes $productType): void
+    public function setProductType(ProductType $productType): void
     {
         $this->productType = $productType;
     }
