@@ -30,7 +30,7 @@ final class Version20200818105154 extends AbstractMigration
           UNIQUE KEY `name` (`name`,`product_type`),
           KEY `product_type` (`product_type`),
           CONSTRAINT `product_ibfk_1` FOREIGN KEY (`product_type`) REFERENCES `product_types` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci';
+        ) ENGINE=InnoDB';
         $this->addSql($sql);
     }
 

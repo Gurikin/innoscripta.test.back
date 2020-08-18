@@ -22,7 +22,7 @@ final class Version20200818104912 extends AbstractMigration
         $sql = 'CREATE TABLE if not exists `product_types` (
             `id` int NOT NULL AUTO_INCREMENT,
             `name` varchar(255) NOT NULL,
-            PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci';
+            PRIMARY KEY (`id`)) ENGINE=InnoDB';
         $this->addSql($sql);
     }
 
