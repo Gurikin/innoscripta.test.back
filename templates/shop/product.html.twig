@@ -1,0 +1,11 @@
+{% block product %}
+    <div class='product m-3' style='{{ "background-image: url(" ~ asset("images/products/" ~ product.imageUrl) ~ ")" }}'
+         id="{{ product.id }}">
+        <div class="title pull-left">
+            {{ product.name }}
+        </div>
+        <button onClick="alert('add to cart');" class="add-to-cart pull-right">
+            <span>{{ product.price }}$/{{ product.price }}€</span>
+        </button>
+    </div>
+{% endblock %}

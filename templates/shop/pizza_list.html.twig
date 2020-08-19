@@ -1,8 +1,8 @@
-{% include 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block body %}
-    <u>
+    <div class='shop-container'>
         {% for product in products %}
-            <li>{{ product.name }}: {{ product.price }}$</li>
+            {{ include('shop/product.html.twig', {'product':product}) }}
         {% endfor %}
-    </u>
+    </div>
 {% endblock %}
