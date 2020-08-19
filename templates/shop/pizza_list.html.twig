@@ -1,0 +1,8 @@
+{% include 'base.html.twig' %}
+{% block body %}
+    <u>
+        {% for product in products %}
+            <li>{{ product.name }}: {{ product.price }}$</li>
+        {% endfor %}
+    </u>
+{% endblock %}
