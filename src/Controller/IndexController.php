@@ -15,7 +15,7 @@ class IndexController extends AbstractController
      */
     final public function getPizzas(): Response
     {
-      $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findBy(['productType' => ProductType::PIZZA_TYPE]);
+      $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::PIZZA_TYPE);
       return $this->render('shop/pizza_list.html.twig', ['products' => $pizzaList]);
     }
 
@@ -24,7 +24,7 @@ class IndexController extends AbstractController
      */
     final public function getToppings(): Response
     {
-        $toppingList = $this->getDoctrine()->getRepository(Product::class)->findBy(['productType' => ProductType::TOPPING_TYPE]);
+        $toppingList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::TOPPING_TYPE);
         return $this->render('shop/pizza_list.html.twig', ['products' => $toppingList]);
     }
 }

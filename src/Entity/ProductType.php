@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProductType
 {
-    public const PIZZA_TYPE = 1;
-    public const TOPPING_TYPE = 2;
+    public const PIZZA_TYPE = 'pizza';
+    public const TOPPING_TYPE = 'topping';
     /**
      * @var int
      *
