@@ -4,26 +4,27 @@ namespace App\Controller;
 
 use App\Entity\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/api/v1/getPizzas", name="get_pizza_list")
+     * @Route("/getPizzas", name="get_pizza_list")
      */
-    public function getPizzas()
+    final public function getPizzas(): Response
     {
       $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findBy(['productType' => ProductType::PIZZA_TYPE]);
-      return $this->json($pizzaList);
+      return $this->render('shop/pizza_list.html.twig', ['products' => $pizzaList]);
     }
 
     /**
-     * @Route("/api/v1/getToppings", name="get_topping_list")
+     * @Route("/getToppings", name="get_topping_list")
      */
-    public function getToppings()
+    final public function getToppings(): Response
     {
         $toppingList = $this->getDoctrine()->getRepository(Product::class)->findBy(['productType' => ProductType::TOPPING_TYPE]);
-        return $this->json($toppingList);
+        return $this->render('shop/pizza_list.html.twig', ['products' => $toppingList]);
     }
 }
