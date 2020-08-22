@@ -1,0 +1,58 @@
+@import "./src/less/vars";
+
+.header {
+  background-color: @main-bgcolor;
+  min-height: 12vh;
+  width: 100%;
+  display: @main-display;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .header-container {
+    width: @main-width;
+    display: @main-display;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);    
+  }
+
+  .logo {
+    color: @main-color;
+  }
+
+  .logo:hover {
+    color: #ffffff;
+  }
+
+  .menu {
+    display: @main-display;
+    width: 100%;
+    justify-content: center;
+    background-color: @main-bgcolor;
+    font: @main-text;
+    ul {      
+      display: @main-display;
+      width: 70%;
+      margin: @main-margin;
+      justify-content: flex-end;
+      list-style: @main-ul-style;
+
+      li {
+        a {
+          font: @header-icon-text;
+          color: @main-color;
+          text-decoration: @main-text-decoration;
+
+          &:hover {
+            color: @header-icon-color;
+          }
+          &:active {
+            color: @header-icon-color;
+          }
+        }
+      }
+    }
+  }
+}

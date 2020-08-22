@@ -1,0 +1,25 @@
+{% block header %}
+<header class="header">
+    <div class='header-container'>
+        <a href='/' class='navbar-brand ml-5 logo'>
+            <img src="{{ asset('images/menu/logo.png') }}" alt=''/>
+        </a>
+        <div class='menu'>
+            <nav class='ml-auto'>
+                <ul>
+                    <li class='mr-4'>
+                        <a href="#" class='a'>
+                            <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class='mr-4'>
+                        <a href="{{ url('sign_in') }}" class='a'>
+                            <i class="fa fa-user fa-3x" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+{% endblock %}

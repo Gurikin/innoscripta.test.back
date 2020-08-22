@@ -1,0 +1,16 @@
+@import "./src/less/vars";
+@product-width: 500px;
+@product-height: 250px;
+
+.product {
+  width: @product-width;
+  height: @product-height;
+  display: @main-display;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: calc(2vh);  
+  .title {
+    text: @main-text;
+  }
+}
