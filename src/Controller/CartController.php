@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -52,7 +51,6 @@ class CartController extends AbstractController
      */
     public function put(Request $request, ?int $productId, ValidatorInterface $validator): JsonResponse
     {
-//        $request->getSession()->clear();return $this->json([]);
         if (!$request->hasSession()) {
             return $this->json(['error' => 'You are no customer. Only customers can added products to cart.'], Response::HTTP_BAD_REQUEST);
         }

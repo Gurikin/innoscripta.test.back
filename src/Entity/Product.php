@@ -168,13 +168,6 @@ class Product
             $this->addedToCarts[] = $cartProduct;
         }
 
-//        /** @var CartProducts $addedToCart */
-//        foreach ($this->addedToCarts as $addedToCart) {
-//            if ($addedToCart->getId() === $this->getId()) {
-//                $addedToCart->incrementProductCount();
-//            }
-//        }
-
         return $this;
     }
 

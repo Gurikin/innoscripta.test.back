@@ -85,13 +85,6 @@ class Cart
             $this->cartProducts[] = $cartProduct;
         }
 
-//        /** @var CartProducts $cartProduct */
-//        foreach ($this->cartProducts as $cartProduct) {
-//            if ($cartProduct->getId() === $this->getId()) {
-//                $cartProduct->incrementProductCount();
-//            }
-//        }
-
         return $this;
     }
 

@@ -34,9 +34,9 @@ class Customer
     private ?User $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="customer", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Cart::class, cascade={"persist", "remove"})
      */
-    private $cart;
+    private Cart $cart;
 
     public function getId(): ?int
     {
@@ -87,11 +87,6 @@ class Customer
     public function setCart(Cart $cart): self
     {
         $this->cart = $cart;
-
-        // set the owning side of the relation if necessary
-        if ($cart->getCustomer() !== $this) {
-            $cart->setCustomer($this);
-        }
 
         return $this;
     }
