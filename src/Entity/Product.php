@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,6 +59,20 @@ class Product
      * })
      */
     private $productType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CartProduct", mappedBy="product")
+     */
+    private $addedToCarts;
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->addedToCarts = new ArrayCollection();
+    }
+
 
     /**
      * @return int
@@ -145,5 +160,38 @@ class Product
     public function setProductType(ProductType $productType): void
     {
         $this->productType = $productType;
+    }
+
+    public function addToCart(CartProduct $cartProduct): self
+    {
+        if (!$this->addedToCarts->contains($cartProduct)) {
+            $this->addedToCarts[] = $cartProduct;
+        }
+
+        return $this;
+    }
+
+    public function removeFromCart(Cart $cart): self
+    {
+        if (!$this->addedToCarts->contains($cart)) {
+            return $this;
+        }
+
+        /** @var CartProduct $addedToCart */
+        foreach ($this->addedToCarts as $addedToCart) {
+            if ($addedToCart->getProduct()->getId() === $this->getId() && $addedToCart->getProductCount() === 1) {
+                $this->addedToCarts->removeElement($cart);
+                $cart->removeProduct($this);
+
+                return $this;
+            }
+            if ($addedToCart->getProduct()->getId() === $this->getId()) {
+                $addedToCart->decrementProductCount();
+
+                return $this;
+            }
+        }
+
+        return $this;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Helper\TokenHelper;
 use App\Repository\CustomerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -34,9 +36,18 @@ class Customer
     private ?User $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="customer", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Cart::class, cascade={"persist", "remove"})
      */
-    private $cart;
+    private Cart $cart;
+
+    /**
+     * Customer constructor.
+     */
+    public function __construct()
+    {
+        $this->cart = new Cart();
+    }
+
 
     public function getId(): ?int
     {
@@ -51,6 +62,7 @@ class Customer
     public function setToken(string $token): self
     {
         $this->token = $token;
+        $this->setTokenExpiredAt((new DateTime(TokenHelper::TOKEN_LIFE_TIME)));
 
         return $this;
     }
@@ -87,11 +99,6 @@ class Customer
     public function setCart(Cart $cart): self
     {
         $this->cart = $cart;
-
-        // set the owning side of the relation if necessary
-        if ($cart->getCustomer() !== $this) {
-            $cart->setCustomer($this);
-        }
 
         return $this;
     }
