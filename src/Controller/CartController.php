@@ -76,6 +76,18 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/cart/count", name="product_in_cart_count", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsInCartCount(Request $request): JsonResponse
+    {
+        $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
+        $productsInCartCount = count($cart->getCartProducts());
+        return $this->json(['productInCartCount' => $productsInCartCount], Response::HTTP_OK);
+    }
+
+    /**
      * @Route("/cart/{productId}", name="delete_product_from_cart", methods={"DELETE"})
      * @param Request $request
      * @param int $productId
