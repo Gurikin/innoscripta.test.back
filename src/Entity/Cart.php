@@ -88,28 +88,14 @@ class Cart
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProduct(CartProduct $cartProduct): self
     {
-        if (!$this->cartProducts->contains($product)) {
+        if (!$this->cartProducts->contains($cartProduct)) {
             return $this;
         }
 
-        /** @var CartProduct $cartProduct */
-        foreach ($this->cartProducts as $cartProduct) {
-            if ($cartProduct->getCart()->getId() === $this->getId() && $cartProduct->getProductCount() === 1) {
-                $this->cartProducts->removeElement($product);
-                $product->removeFromCart($this);
-
-                return $this;
-            }
-
-            if ($cartProduct->getId() === $this->getId()) {
-                $cartProduct->decrementProductCount();
-
-                return $this;
-            }
-        }
-
+        $this->cartProducts->removeElement($cartProduct);
+        $this->setTotalPrice(-$cartProduct->getProduct()->getPrice());
         return $this;
     }
 }

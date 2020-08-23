@@ -61,13 +61,11 @@ class CartController extends AbstractController
             }
 
             $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
-            $cartProducts = count($cart->getCartProducts()) > 0 ? $cart->getCartProducts() : [new CartProduct()];
 
-            foreach ($cartProducts as $cartProduct) {
-                $cartProduct->setCart($cart);
-                $cartProduct->setProduct($product);
-                $this->em->persist($cartProduct);
-            }
+            $cartProduct = new CartProduct();
+            $cartProduct->setCart($cart);
+            $cartProduct->setProduct($product);
+            $this->em->persist($cartProduct);
 
             $this->em->flush();
         } catch (RuntimeException $e) {
@@ -97,9 +95,13 @@ class CartController extends AbstractController
 
             /** @var CartProduct $cartProduct */
             $cartProduct = $this->em->getRepository(CartProduct::class)->findByCartIdProductId($request->getSession()->get('cartId'), $productId);
-            $cartProduct->removeProduct($productId);
 
-            $this->em->persist($cartProduct);
+            if ($cartProduct === null) {
+                return $this->json(['error' => 'That product was not found in your cart.'], Response::HTTP_NOT_FOUND);
+            }
+
+            $cartProduct->getCart()->removeProduct($cartProduct);
+            $this->em->remove($cartProduct);
             $this->em->flush();
         } catch (RuntimeException $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);

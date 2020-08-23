@@ -37,7 +37,7 @@ class CartProductRepository extends ServiceEntityRepository
     /**
      * @param int $cartId
      * @param int $productId
-     * @return mixed ?CartProduct
+     * @return CartProduct|null
      * @throws NonUniqueResultException
      */
     public function findByCartIdProductId(int $cartId, int $productId): ?CartProduct
@@ -48,6 +48,7 @@ class CartProductRepository extends ServiceEntityRepository
             ->setParameter('cartId', $cartId)
             ->setParameter('productId', $productId)
             ->getQuery()
+            ->setMaxResults(1)
             ->getOneOrNullResult();
     }
 

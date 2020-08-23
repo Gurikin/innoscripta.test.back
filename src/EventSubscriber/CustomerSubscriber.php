@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Entity\Cart;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -26,7 +27,7 @@ class CustomerSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$request->getSession()->get('customerToken')) {
+        if (!$token = $request->getSession()->get('customerToken')) {
             $customer = new Customer();
             $token = sha1($request->getClientIp() . $request->getSession()->getName());
             $customer->setToken($token);
@@ -36,6 +37,14 @@ class CustomerSubscriber implements EventSubscriberInterface
 
             $request->getSession()->set('customerToken', $token);
             $request->getSession()->set('cartId', $customer->getCart()->getId());
+
+            return;
+        }
+
+        /** @var Customer $customer */
+        $customer = $this->em->getRepository(Customer::class)->findOneBy(['token' => $token]);
+        if ($customer->getCart() === null) {
+            throw new RuntimeException('You are customer but cart was not created for you. Something wrong with your session.');
         }
     }
 
