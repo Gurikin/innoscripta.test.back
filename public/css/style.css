@@ -101,7 +101,7 @@
   align-items: flex-start;
   justify-content: space-between;
   font-size: calc(2vh);
-  transition: all 0.6s ease-in;
+  transition: all 0.3s ease-in-out;
 }
 
 .product .title {
@@ -110,8 +110,8 @@
 }
 
 .product:hover {
-  transform: scale(1.2);
-  border-radius: 50px;
+  transform: scale(1.1);
+  border-radius: 120px;
 }
 .shop-container {
   background-color: #231F20;
