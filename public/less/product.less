@@ -1,4 +1,5 @@
 @import "vars";
+
 @product-width: 500px;
 @product-height: 250px;
 
@@ -9,8 +10,16 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  font-size: calc(2vh);  
+  font-size: calc(2vh);
+  transition: all .6s ease-in;
+
   .title {
-    text: @main-text;
+    font: @main-text;
+    color: @main-color;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+    border-radius: 50px;
   }
 }

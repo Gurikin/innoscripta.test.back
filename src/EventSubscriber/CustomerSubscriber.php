@@ -7,6 +7,7 @@ use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class CustomerSubscriber implements EventSubscriberInterface
@@ -28,21 +29,16 @@ class CustomerSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
 
         if (!$token = $request->getSession()->get('customerToken')) {
-            $customer = new Customer();
-            $token = sha1($request->getClientIp() . $request->getSession()->getName());
-            $customer->setToken($token);
-
-            $this->em->persist($customer);
-            $this->em->flush();
-
-            $request->getSession()->set('customerToken', $token);
-            $request->getSession()->set('cartId', $customer->getCart()->getId());
-
+            $this->bindNewCustomerToken($request);
             return;
         }
 
         /** @var Customer $customer */
         $customer = $this->em->getRepository(Customer::class)->findOneBy(['token' => $token]);
+        if ($customer === null) {
+            $this->bindNewCustomerToken($request);
+        }
+
         if ($customer->getCart() === null) {
             throw new RuntimeException('You are customer but cart was not created for you. Something wrong with your session.');
         }
@@ -53,5 +49,24 @@ class CustomerSubscriber implements EventSubscriberInterface
         return [
             'kernel.request' => 'onKernelRequest',
         ];
+    }
+
+    private function bindNewCustomerToken(Request $request): bool
+    {
+        try {
+            $customer = new Customer();
+            $token = sha1($request->getClientIp() . $request->getSession()->getName());
+            $customer->setToken($token);
+
+            $this->em->persist($customer);
+            $this->em->flush();
+
+            $request->getSession()->set('customerToken', $token);
+            $request->getSession()->set('cartId', $customer->getCart()->getId());
+
+            return true;
+        } catch (RuntimeException $e) {
+            return false;
+        }
     }
 }
