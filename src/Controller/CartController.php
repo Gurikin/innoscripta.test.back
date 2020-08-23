@@ -51,12 +51,8 @@ class CartController extends AbstractController
      */
     public function put(Request $request, ?int $productId, ValidatorInterface $validator): JsonResponse
     {
-        if (!$request->hasSession()) {
-            return $this->json(['error' => 'You are no customer. Only customers can added products to cart.'], Response::HTTP_BAD_REQUEST);
-        }
-
         try {
-            if ($errorMessage = $this->checkInputData($productId, $validator)) {
+            if ($errorMessage = $this->validateProductId($productId, $validator)) {
                 return $this->json(['error' => $errorMessage], Response::HTTP_NOT_FOUND);
             }
 
@@ -64,13 +60,8 @@ class CartController extends AbstractController
                 return $this->json(['error' => 'Product was not found.'], Response::HTTP_NOT_FOUND);
             }
 
-            $cartProducts = [new CartProduct()];
-            $cart = new Cart();
-
-            if ($request->getSession()->has('cartId')) {
-                $cartProducts = $this->em->getRepository(CartProduct::class)->findByCartId($request->getSession()->get('cartId'));
-                $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
-            }
+            $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
+            $cartProducts = count($cart->getCartProducts()) > 0 ? $cart->getCartProducts() : [new CartProduct()];
 
             foreach ($cartProducts as $cartProduct) {
                 $cartProduct->setCart($cart);
@@ -79,7 +70,6 @@ class CartController extends AbstractController
             }
 
             $this->em->flush();
-            $request->getSession()->set('cartId', $cart->getId());
         } catch (RuntimeException $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -96,17 +86,9 @@ class CartController extends AbstractController
      */
     public function delete(Request $request, int $productId, ValidatorInterface $validator): JsonResponse
     {
-        if (!$request->hasSession()) {
-            return $this->json(['error' => 'You are no customer. Only customers can added products to cart.'], Response::HTTP_UNAUTHORIZED);
-        }
-
         try {
-            if ($errorMessage = $this->checkInputData($productId, $validator)) {
+            if ($errorMessage = $this->validateProductId($productId, $validator)) {
                 return $this->json(['error' => $errorMessage], Response::HTTP_NOT_FOUND);
-            }
-
-            if (!$request->getSession()->has('cartId')) {
-                return $this->json(['error' => 'You have not cart. Something went wrong.'], Response::HTTP_BAD_REQUEST);
             }
 
             if (!($product = $this->getProduct($productId))) {
@@ -136,7 +118,7 @@ class CartController extends AbstractController
      * @param ValidatorInterface $validator
      * @return string
      */
-    private function checkInputData(int $productId, ValidatorInterface $validator): ?string
+    private function validateProductId(int $productId, ValidatorInterface $validator): ?string
     {
         $errorMessage = null;
 

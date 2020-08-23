@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Helper\TokenHelper;
 use App\Repository\CustomerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -38,6 +40,15 @@ class Customer
      */
     private Cart $cart;
 
+    /**
+     * Customer constructor.
+     */
+    public function __construct()
+    {
+        $this->cart = new Cart();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +62,7 @@ class Customer
     public function setToken(string $token): self
     {
         $this->token = $token;
+        $this->setTokenExpiredAt((new DateTime(TokenHelper::TOKEN_LIFE_TIME)));
 
         return $this;
     }
