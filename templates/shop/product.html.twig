@@ -4,7 +4,7 @@
         <div class="title pull-left">
             {{ product.name }}
         </div>
-        <button onClick="alert('add to cart');" class="add-to-cart pull-right">
+        <button onClick="putProductToCart('{{ url('put_product_to_cart', {productId: product.id}) }}');" class="add-to-cart pull-right">
             <span>{{ product.price }}$/{{ product.price }}€</span>
         </button>
     </div>
