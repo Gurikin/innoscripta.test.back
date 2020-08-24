@@ -3,7 +3,7 @@
 {% block title %}Your cart{% endblock %}
 
 {% block body %}
-    <div class='shop-container'>
+    <div class='cart-container m-4'>
         {% for cartProduct in cartProducts %}
             {{ include('cart/cart_product.html.twig', {'cartProduct':cartProduct}) }}
         {% endfor %}
