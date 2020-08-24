@@ -35,10 +35,13 @@ class CartController extends AbstractController
 
     /**
      * @Route("/cart", name="cart", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('cart/index.html.twig', []);
+        $cartProducts = $this->em->getRepository(CartProduct::class)->getGroupedProductList($request->getSession()->get('cartId'));
+        return $this->render('cart/index.html.twig', ['cartProducts' => $cartProducts]);
     }
 
 
