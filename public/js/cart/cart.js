@@ -1,32 +1,49 @@
-let baseUrl = 'http://innoscripta.test/cart/';
-document.addEventListener("DOMContentLoaded", updateProductInCartCount);
+document.addEventListener("DOMContentLoaded", function () {
+    updateProductInCartCount(baseUrl + 'cart')
+});
+// document.onload(function () {
+//     updateProductInCartCount(baseUrl + 'cart/')
+// });
 
-function putProductToCart(productId) {
+function putProductToCart(productId, requestUrl) {
     $.ajax({
         type: "PUT",
-        url: baseUrl + productId,
+        url: requestUrl + '/' + productId,
         success: function (msg) {
             console.log(msg);
-            updateProductInCartCount();
+            updateProductInCartCount(requestUrl);
         }
     });
 }
 
-function deleteProductFromCart(productId) {
+function addProductToCart(productId, requestUrl) {
+    $.ajax({
+        type: "PUT",
+        url: requestUrl + '/' + productId,
+        success: function (msg) {
+            console.log(msg);
+            updateProductInCartCount(requestUrl);
+            request("GET", requestUrl);
+        }
+    });
+}
+
+function deleteProductFromCart(productId, requestUrl) {
     $.ajax({
         type: "DELETE",
-        url: baseUrl + productId,
+        url: requestUrl + '/' + productId,
         success: function (msg) {
             console.log(msg);
-            updateProductInCartCount();
+            updateProductInCartCount(requestUrl);
+            request("GET", requestUrl);
         }
     });
 }
 
-function updateProductInCartCount() {
+function updateProductInCartCount(requestUrl) {
     $.ajax({
         type: "GET",
-        url: baseUrl + 'count',
+        url: requestUrl + '/count',
         success: function (msg) {
             $("#productInCartCount").text(msg.productInCartCount);
         }

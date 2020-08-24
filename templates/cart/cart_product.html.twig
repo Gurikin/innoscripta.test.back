@@ -4,9 +4,9 @@
             <span>{{ cartProduct.product.name }}</span>
         </div>
         <div class="count ml-auto mr-3">
-            <button class="btn btn-dark cart-btn" onclick="deleteProductFromCart({{ cartProduct.product.id }}); window.location.reload();">-</button>
+            <button class="btn btn-dark cart-btn" onclick="deleteProductFromCart({{ cartProduct.product.id }}, '{{ url('cart') }}');">-</button>
             <span>{{ cartProduct.productCount }}</span>
-            <button class="btn btn-dark cart-btn" onclick="putProductToCart({{ cartProduct.product.id }}); window.location.reload();">+</button>
+            <button class="btn btn-dark cart-btn" onclick="addProductToCart({{ cartProduct.product.id }}, '{{ url('cart') }}');">+</button>
         </div>
     </div>
 {% endblock %}
