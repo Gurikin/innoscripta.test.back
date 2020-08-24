@@ -1,0 +1,52 @@
+@import "vars";
+
+@cart-product-width: 80%;
+@cart-product-height: 80px;
+
+.cart-product, .cart-score {
+  width: @cart-product-width;
+  height: @cart-product-height;
+  display: @main-display;
+  flex-direction: row;
+  align-items: center;
+  justify-items: flex-start;
+  font-size: calc(3vh);
+  border-radius: 20px;
+
+  .title {
+    position: relative;
+    font: @main-text;
+    font-size: 20px;
+    color: @main-color;
+  }
+
+  .count {
+    position: relative;
+    font: @main-text;
+    font-size: 24px;
+    color: @main-color;
+  }
+  
+  .cart-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+
+    &:hover {
+      color: @header-icon-color;
+    }
+  }
+
+  &:hover {
+    background-color: #545b62;
+    color: #80bdff;
+  }
+
+  .score {
+    position: relative;
+    font: @main-text;
+    font-size: 24px;
+    font-weight: bold;
+    color: @main-color;
+  }
+}

@@ -5,7 +5,9 @@ namespace App\EventSubscriber;
 use App\Entity\Cart;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class CustomerSubscriber implements EventSubscriberInterface
@@ -26,7 +28,32 @@ class CustomerSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$request->getSession()->get('customerToken')) {
+        if (!$token = $request->getSession()->get('customerToken')) {
+            $this->bindNewCustomerToken($request);
+            return;
+        }
+
+        /** @var Customer $customer */
+        $customer = $this->em->getRepository(Customer::class)->findOneBy(['token' => $token]);
+        if ($customer === null) {
+            $this->bindNewCustomerToken($request);
+        }
+
+        if ($customer->getCart() === null) {
+            throw new RuntimeException('You are customer but cart was not created for you. Something wrong with your session.');
+        }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            'kernel.request' => 'onKernelRequest',
+        ];
+    }
+
+    private function bindNewCustomerToken(Request $request): bool
+    {
+        try {
             $customer = new Customer();
             $token = sha1($request->getClientIp() . $request->getSession()->getName());
             $customer->setToken($token);
@@ -36,13 +63,10 @@ class CustomerSubscriber implements EventSubscriberInterface
 
             $request->getSession()->set('customerToken', $token);
             $request->getSession()->set('cartId', $customer->getCart()->getId());
-        }
-    }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            'kernel.request' => 'onKernelRequest',
-        ];
+            return true;
+        } catch (RuntimeException $e) {
+            return false;
+        }
     }
 }

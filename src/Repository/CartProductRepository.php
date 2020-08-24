@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cart;
 use App\Entity\CartProduct;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,7 +38,7 @@ class CartProductRepository extends ServiceEntityRepository
     /**
      * @param int $cartId
      * @param int $productId
-     * @return mixed ?CartProduct
+     * @return CartProduct|null
      * @throws NonUniqueResultException
      */
     public function findByCartIdProductId(int $cartId, int $productId): ?CartProduct
@@ -48,7 +49,27 @@ class CartProductRepository extends ServiceEntityRepository
             ->setParameter('cartId', $cartId)
             ->setParameter('productId', $productId)
             ->getQuery()
+            ->setMaxResults(1)
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param int $cartId
+     * @return CartProduct[]|null
+     */
+    public function getGroupedProductList(int $cartId): ?array
+    {
+        return $this->createQueryBuilder('cp')
+            ->select('IDENTITY(cp.product) as productId, count(cp.product) as productCount')
+            ->andWhere('cp.cart = :cartId')
+            ->setParameter('cartId', $cartId)
+            ->join('cp.product', 'p')
+            ->addSelect('p.name, p.price')
+            ->join('p.productType', 'pt')
+            ->addSelect('pt.name as productType')
+            ->groupBy('cp.product')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

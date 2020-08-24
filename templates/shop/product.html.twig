@@ -4,7 +4,12 @@
         <div class="title pull-left">
             {{ product.name }}
         </div>
-        <button onClick="putProductToCart('{{ url('put_product_to_cart', {productId: product.id}) }}');" class="add-to-cart pull-right">
+{#        <div class="description pull-left align-bottom">#}
+{#            {{ product.description }}#}
+{#        </div>#}
+        <button
+                onClick="putProductToCart({{ product.id }});"
+                class="add-to-cart pull-right">
             <span>{{ product.price }}$/{{ product.price }}€</span>
         </button>
     </div>

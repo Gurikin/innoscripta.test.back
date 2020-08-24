@@ -1,4 +1,4 @@
-@import "./src/less/vars";
+@import "vars";
 
 .header {
   background-color: @main-bgcolor;
@@ -15,7 +15,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);    
+    font-size: calc(10px + 2vmin);
   }
 
   .logo {
@@ -32,7 +32,8 @@
     justify-content: center;
     background-color: @main-bgcolor;
     font: @main-text;
-    ul {      
+
+    ul {
       display: @main-display;
       width: 70%;
       margin: @main-margin;
@@ -40,6 +41,8 @@
       list-style: @main-ul-style;
 
       li {
+        position: relative;
+
         a {
           font: @header-icon-text;
           color: @main-color;
@@ -48,9 +51,21 @@
           &:hover {
             color: @header-icon-color;
           }
+
           &:active {
             color: @header-icon-color;
           }
+        }
+
+        #productInCartCount {
+          position: absolute;
+          font-size: 18px;
+          background: #DB9A8C;
+          color: #ffffff;
+          width: 40%;
+          height: 40%;
+          border-radius: 20px;
+          text-align: center;
         }
       }
     }

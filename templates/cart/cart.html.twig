@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your cart{% endblock %}
+
+{% block body %}
+    <div class='cart-container m-4'>
+        {% for cartProduct in cartProducts %}
+            {{ include('cart/cart_product.html.twig', {'cartProduct':cartProduct}) }}
+        {% endfor %}
+        <div class='cart-score'>
+            <b class="score ml-auto mr-3">TOTAL PRICE: {{ totalPrice }}$/{{ totalPrice }}€</b>
+        </div>
+    </div>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\Product;
+use App\Model\CartProductCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,10 +36,19 @@ class CartController extends AbstractController
 
     /**
      * @Route("/cart", name="cart", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('cart/index.html.twig', []);
+        $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
+        $cartProductsWithoutGrouping = $cart->getCartProducts();
+        $cartProducts = (new CartProductCollection($cartProductsWithoutGrouping))->getCartProductCollection();
+        return $this->render('cart/cart.html.twig', [
+            'cartProducts' => $cartProducts,
+            'totalCartProductsCount' => count($cartProductsWithoutGrouping),
+            'totalPrice' => $cart->getTotalPrice()
+        ]);
     }
 
 
@@ -61,13 +71,11 @@ class CartController extends AbstractController
             }
 
             $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
-            $cartProducts = count($cart->getCartProducts()) > 0 ? $cart->getCartProducts() : [new CartProduct()];
 
-            foreach ($cartProducts as $cartProduct) {
-                $cartProduct->setCart($cart);
-                $cartProduct->setProduct($product);
-                $this->em->persist($cartProduct);
-            }
+            $cartProduct = new CartProduct();
+            $cartProduct->setCart($cart);
+            $cartProduct->setProduct($product);
+            $this->em->persist($cartProduct);
 
             $this->em->flush();
         } catch (RuntimeException $e) {
@@ -75,6 +83,18 @@ class CartController extends AbstractController
         }
 
         return $this->json(['message' => 'ok'], Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/cart/count", name="product_in_cart_count", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProductsInCartCount(Request $request): JsonResponse
+    {
+        $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
+        $productsInCartCount = count($cart->getCartProducts());
+        return $this->json(['productInCartCount' => $productsInCartCount], Response::HTTP_OK);
     }
 
     /**
@@ -97,9 +117,13 @@ class CartController extends AbstractController
 
             /** @var CartProduct $cartProduct */
             $cartProduct = $this->em->getRepository(CartProduct::class)->findByCartIdProductId($request->getSession()->get('cartId'), $productId);
-            $cartProduct->removeProduct($productId);
 
-            $this->em->persist($cartProduct);
+            if ($cartProduct === null) {
+                return $this->json(['error' => 'That product was not found in your cart.'], Response::HTTP_NOT_FOUND);
+            }
+
+            $cartProduct->getCart()->removeProduct($cartProduct);
+            $this->em->remove($cartProduct);
             $this->em->flush();
         } catch (RuntimeException $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);

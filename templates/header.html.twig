@@ -8,7 +8,8 @@
             <nav class='ml-auto'>
                 <ul>
                     <li class='mr-4'>
-                        <a href="#" class='a'>
+                        <span id="productInCartCount" onload="updateProductInCartCount();"></span>
+                        <a href="{{ url('cart') }}" class='a'>
                             <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
                         </a>
                     </li>
