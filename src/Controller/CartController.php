@@ -42,9 +42,8 @@ class CartController extends AbstractController
     public function index(Request $request): Response
     {
         $cartProductsWithoutGrouping = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'))->getCartProducts();
-        $cartProducts = new CartProductCollection($cartProductsWithoutGrouping);
-        dd($cartProducts);
-        return $this->render('cart/index.html.twig', ['cartProducts' => $cartProducts]);
+        $cartProducts = (new CartProductCollection($cartProductsWithoutGrouping))->getCartProductCollection();
+        return $this->render('cart/cart.html.twig', ['cartProducts' => $cartProducts]);
     }
 
 

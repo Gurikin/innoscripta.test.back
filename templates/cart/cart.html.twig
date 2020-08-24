@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your cart{% endblock %}
+
+{% block body %}
+    <div class='shop-container'>
+        {% for cartProduct in cartProducts %}
+            {{ include('cart/cart_product.html.twig', {'cartProduct':cartProduct}) }}
+        {% endfor %}
+    </div>
+{% endblock %}
