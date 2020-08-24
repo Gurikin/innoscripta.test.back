@@ -60,7 +60,7 @@ class CartProductRepository extends ServiceEntityRepository
     public function getGroupedProductList(int $cartId): ?array
     {
         return $this->createQueryBuilder('cp')
-            ->select('IDENTITY(cp.product) as id, count(cp.product) as productCount')
+            ->select('IDENTITY(cp.product) as productId, count(cp.product) as productCount')
             ->andWhere('cp.cart = :cartId')
             ->setParameter('cartId', $cartId)
             ->join('cp.product', 'p')

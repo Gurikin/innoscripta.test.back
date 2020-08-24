@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\Product;
+use App\Model\CartProductCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,9 @@ class CartController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $cartProducts = $this->em->getRepository(CartProduct::class)->getGroupedProductList($request->getSession()->get('cartId'));
+        $cartProductsWithoutGrouping = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'))->getCartProducts();
+        $cartProducts = new CartProductCollection($cartProductsWithoutGrouping);
+        dd($cartProducts);
         return $this->render('cart/index.html.twig', ['cartProducts' => $cartProducts]);
     }
 
