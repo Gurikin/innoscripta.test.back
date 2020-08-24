@@ -23,6 +23,23 @@ body {
   align-items: center;
   justify-content: center;
 }
+.cart-product {
+  width: 800px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  font-size: calc(3vh);
+}
+
+.cart-product .title {
+  font: 14px Roboto white;
+  color: #999999;
+}
+
+.cart-product:hover {
+  background-color: #343a40;
+}
 .header {
   background-color: #231F20;
   min-height: 12vh;

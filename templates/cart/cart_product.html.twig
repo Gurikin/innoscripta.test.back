@@ -1,5 +1,5 @@
 {% block cartProduct %}
-    <div class='product m-3' style='{{ "background-image: url(" ~ asset("images/products/" ~ cartProduct.product.imageUrl) ~ ")" }}'
+    <div class='cart-product m-3' style='{{ "background-image: url(" ~ asset("images/products/" ~ cartProduct.product.imageUrl) ~ ")" }}'
          id="{{ cartProduct.product.id }}">
         <div class="title pull-left">
             {{ cartProduct.productCount }}

@@ -1,0 +1,22 @@
+@import "vars";
+
+@cart-product-width: 800px;
+@cart-product-height: 80px;
+
+.cart-product {
+  width: @cart-product-width;
+  height: @cart-product-height;
+  display: @main-display;
+  flex-direction: row;
+  align-items: flex-start;
+  font-size: calc(3vh);
+
+  .title {
+    font: @main-text;
+    color: @main-color;
+  }
+
+  &:hover {
+    background-color: #343a40;
+  }
+}
