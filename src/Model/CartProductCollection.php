@@ -34,10 +34,12 @@ final class CartProductCollection
         /** @var CartProduct $cartProduct */
         foreach ($sourceCartProductCollection as $cartProduct) {
             $cartProductId = $cartProduct->getProduct()->getId();
+
             if (in_array($cartProductId, $this->cartProductCollection->getKeys())) {
                 $this->cartProductCollection->get($cartProductId)->incrementProductCount();
                 continue;
             }
+
             $this->cartProductCollection->set($cartProductId, new CartProductDto($cartProduct));
         }
     }

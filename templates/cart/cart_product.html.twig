@@ -1,12 +1,12 @@
 {% block cartProduct %}
-    <div class='cart-product ml-3 mr-3' id="{{ cartProduct.product.id }}">
-        <div class="title mr-auto">
+    <div class='cart-product ml-3 mr-3' id="{{ cartProduct.id }}">
+        <div class="title mr-auto ml-3">
             <span>{{ cartProduct.product.name }}</span>
         </div>
-        <div class="count ml-auto">
-            <button class="btn btn-dark cart-btn">-</button>
+        <div class="count ml-auto mr-3">
+            <button class="btn btn-dark cart-btn" onclick="deleteProductFromCart({{ cartProduct.product.id }}); window.location.reload();">-</button>
             <span>{{ cartProduct.productCount }}</span>
-            <button class="btn btn-dark cart-btn">+</button>
+            <button class="btn btn-dark cart-btn" onclick="putProductToCart({{ cartProduct.product.id }}); window.location.reload();">+</button>
         </div>
     </div>
 {% endblock %}
