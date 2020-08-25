@@ -12,12 +12,21 @@ use App\Entity\Product;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="get_pizza_list")
+     * @Route("/", name="index")
+     */
+    final public function index(): Response
+    {
+      $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::PIZZA_TYPE);
+      return $this->render('base.html.twig', ['products' => $pizzaList]);
+    }
+
+    /**
+     * @Route("/getPizzas", name="get_pizza_list")
      */
     final public function getPizzas(): Response
     {
-      $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::PIZZA_TYPE);
-      return $this->render('shop/pizza_list.html.twig', ['products' => $pizzaList]);
+        $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::PIZZA_TYPE);
+        return $this->render('shop/pizza_list.html.twig', ['products' => $pizzaList]);
     }
 
     /**

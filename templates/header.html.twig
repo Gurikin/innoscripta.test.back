@@ -1,7 +1,7 @@
 {% block header %}
 <header class="header">
     <div class='header-container'>
-        <a href='/' class='navbar-brand ml-5 logo'>
+        <a href='#' class='navbar-brand ml-5 logo' onclick="request('GET', '{{ url('get_pizza_list') }}');">
             <img src="{{ asset('images/menu/logo.png') }}" alt=''/>
         </a>
         <div class='menu'>
@@ -9,12 +9,12 @@
                 <ul>
                     <li class='mr-4'>
                         <span id="productInCartCount" onload="updateProductInCartCount();"></span>
-                        <a href="{{ url('cart') }}" class='a'>
+                        <a href="#" class='a' onclick="request('GET', '{{ url('cart') }}');">
                             <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li class='mr-4'>
-                        <a href="{{ url('sign_in') }}" class='a'>
+                        <a href="#" class='a' onclick="request('GET', '{{ url('sign_in') }}');">
                             <i class="fa fa-user fa-3x" aria-hidden="true"></i>
                         </a>
                     </li>

@@ -24,9 +24,11 @@ final class CartProductCollection
         $this->convertCartProductCollection($sourceCartProductCollection);
     }
 
-    public function getCartProductCollection(): ArrayCollection
+    public function getCartProductCollection(): array
     {
-        return $this->cartProductCollection;
+        $resultCollection = $this->cartProductCollection->getValues();
+        ksort($resultCollection);
+        return $resultCollection;
     }
 
     private function convertCartProductCollection(PersistentCollection $sourceCartProductCollection)

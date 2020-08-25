@@ -1,9 +1,14 @@
-function request(method, url) {
+let baseUrl = 'http://innoscripta.test/';
+if (document.documentURI === baseUrl || document.documentURI === (baseUrl + '#')) {
+    document.addEventListener("DOMContentLoaded", request("GET", baseUrl + 'getPizzas'));
+}
+
+function request(method, requestUrl) {
     $.ajax({
         type: method,
-        url: url,
+        url: requestUrl,
         success: function (msg) {
-            console.log(msg);
+            $(".main-container").html(msg);
         }
     });
 }

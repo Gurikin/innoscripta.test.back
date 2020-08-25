@@ -8,7 +8,7 @@
 {#            {{ product.description }}#}
 {#        </div>#}
         <button
-                onClick="putProductToCart({{ product.id }});"
+                onClick="putProductToCart({{ product.id }}, '{{ url('cart') }}');"
                 class="add-to-cart pull-right">
             <span>{{ product.price }}$/{{ product.price }}€</span>
         </button>
