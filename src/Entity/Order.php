@@ -59,6 +59,12 @@ class Order
     private DateTimeInterface $createdAt;
 
     /**
+     * @ORM\OneToOne(targetEntity=Customer::class, inversedBy="pizzaOrder", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Customer $customer;
+
+    /**
      * Order constructor.
      */
     public function __construct()
@@ -152,6 +158,18 @@ class Order
     public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(Customer $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }

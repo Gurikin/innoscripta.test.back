@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Customer;
 use App\Entity\Order;
 use App\Model\Type\OrderType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +56,14 @@ class OrderController extends AbstractController
             /** @var Order $order */
             $order = $orderForm->getData();
             $order->setProductsCost($cart->getTotalPrice());
+            $order
+                ->setCustomer(
+                    $this->em
+                        ->getRepository(Customer::class)
+                        ->findOneBy(
+                            [
+                                'token' => $request->getSession()->get('customerToken')
+                            ]));
 
             $this->em->persist($order);
             $this->em->flush();
