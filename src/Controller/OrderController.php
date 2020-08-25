@@ -59,7 +59,7 @@ class OrderController extends AbstractController
             $this->em->persist($order);
             $this->em->flush();
 
-            $request->getSession()->invalidate();
+            $request->getSession()->remove('customerToken');
 
             $totalPrice = $order->getProductsCost() + $order->getDeliveryCost();
             return $this->redirectToRoute('order_success', ['totalPrice' => $totalPrice]);
