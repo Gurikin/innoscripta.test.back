@@ -48,6 +48,11 @@ class Order
      */
     private float $deliveryCost;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Order
     public function setDeliveryCost(float $deliveryCost): self
     {
         $this->deliveryCost = $deliveryCost;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
