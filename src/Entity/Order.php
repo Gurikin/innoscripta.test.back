@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    private const DELIVERY_COST = 5.0;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -48,10 +51,21 @@ class Order
      */
     private float $deliveryCost;
 
+
+
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private DateTimeInterface $createdAt;
+
+    /**
+     * Order constructor.
+     */
+    public function __construct()
+    {
+        $this->deliveryCost = self::DELIVERY_COST;
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -130,12 +144,12 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 

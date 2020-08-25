@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="form-container">
+        {{ form_start(orderForm, {'action': url('save_order')}) }}
+        <div class="text-danger">
+            {{ form_errors(orderForm) }}
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                {{ form_row(orderForm.name) }}
+            </div>
+            <div class="row">
+                {{ form_row(orderForm.surname) }}
+            </div>
+            <div class="row">
+                {{ form_row(orderForm.address) }}
+            </div>
+            <div class="row">
+                {{ form_row(orderForm.phone) }}
+            </div>
+            {{ form_row(orderForm.submit) }}
+        </div>
+        {{ form_end(orderForm) }}
+    </div>
+{% endblock %}
