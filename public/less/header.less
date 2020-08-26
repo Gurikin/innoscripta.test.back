@@ -3,7 +3,8 @@
 .header {
   background-color: @main-bgcolor;
   min-height: 12vh;
-  width: 100%;
+  width: @main-width;
+  min-width: @min-width;
   display: @main-display;
   flex-direction: row;
   align-items: center;
@@ -11,6 +12,7 @@
 
   .header-container {
     width: @main-width;
+    -webkit-column-width: @main-width;
     display: @main-display;
     flex-direction: row;
     align-items: center;
@@ -28,7 +30,7 @@
 
   .menu {
     display: @main-display;
-    width: 100%;
+    width: @main-width;
     justify-content: center;
     background-color: @main-bgcolor;
     font: @main-text;

@@ -1,7 +1,9 @@
 @import "vars";
 
 html, body {
-  width: 100%;
+  width: @main-width;
+  min-width: @min-width;
+  min-height: 1200px;
   height: 100%;
 }
 
@@ -16,7 +18,7 @@ body {
 
   .main-container {
     background-color: @main-bgcolor;
-    width: 100%;
+    width: @main-width;
     height: 100%;
     display: @main-display;
     flex-direction: row;
