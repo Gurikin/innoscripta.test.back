@@ -18,27 +18,27 @@ class Customer
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $token;
+    private $token;
 
     /**
      * @ORM\Column(type="datetime", name="token_expired_at")
      */
-    private ?DateTimeInterface $tokenExpiredAt;
+    private $tokenExpiredAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="customers")
      */
-    private ?User $user;
+    private $user;
 
     /**
      * @ORM\OneToOne(targetEntity=Cart::class, cascade={"persist", "remove"})
      */
-    private Cart $cart;
+    private $cart;
 
     /**
      * @ORM\OneToOne(targetEntity=Order::class, mappedBy="customer", cascade={"persist", "remove"})

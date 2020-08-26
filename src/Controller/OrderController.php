@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\Customer;
 use App\Entity\Order;
+use App\Entity\User;
 use App\Model\Type\OrderType;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,31 +54,43 @@ class OrderController extends AbstractController
         $orderForm = $this->createForm(OrderType::class, $order);
 
         $orderForm->handleRequest($request);
-        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
-            /** @var Order $order */
-            $order = $orderForm->getData();
-            $order->setProductsCost($cart->getTotalPrice());
-            $order
-                ->setCustomer(
-                    $this->em
-                        ->getRepository(Customer::class)
-                        ->findOneBy(
-                            [
-                                'token' => $request->getSession()->get('customerToken')
-                            ]));
-
-            $this->em->persist($order);
-            $this->em->flush();
-
-            $request->getSession()->remove('customerToken');
-
-            $totalPrice = $order->getProductsCost() + $order->getDeliveryCost();
-            return $this->redirectToRoute('order_success', ['totalPrice' => $totalPrice]);
+        if (!$orderForm->isSubmitted() || !$orderForm->isValid()) {
+            return $this->render('order/order-form.html.twig', [
+                'orderForm' => $orderForm->createView()
+            ]);
         }
 
-        return $this->render('order/order-form.html.twig', [
-            'orderForm' => $orderForm
-        ]);
+        /** @var Order $order */
+        $order = $orderForm->getData();
+
+        try {
+            $this->em->beginTransaction();
+            $order->setProductsCost($cart->getTotalPrice());
+
+            $customer = $this->em->getRepository(Customer::class)
+                ->findOneBy(['token' => $request->getSession()->get('customerToken')]);
+
+            $order->setCustomer($customer);
+
+            if (null !== $this->getUser()) {
+                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUsername()]);
+                $user->addCustomer($customer);
+                $this->em->persist($user);
+            }
+
+            $this->em->persist($order);
+
+            $this->em->flush();
+            $this->em->commit();
+        } catch (RuntimeException $e) {
+            $this->em->rollback();
+        }
+
+        $request->getSession()->remove('customerToken');
+        $request->getSession()->remove('cartId');
+
+        $totalPrice = $order->getProductsCost() + $order->getDeliveryCost();
+        return $this->redirectToRoute('order_success', ['totalPrice' => $totalPrice]);
     }
 
     /**
@@ -84,7 +98,8 @@ class OrderController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function orderSuccess(Request $request)
+    public
+    function orderSuccess(Request $request)
     {
         return $this->render('order/order-success.html.twig', ['totalPrice' => $request->get('totalPrice')]);
     }

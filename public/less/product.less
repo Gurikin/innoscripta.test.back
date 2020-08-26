@@ -1,10 +1,11 @@
 @import "vars";
 
-@product-width: 500px;
+@product-width: 80%;
 @product-height: 250px;
 
 .product {
   width: @product-width;
+  max-width: @main-width;
   height: @product-height;
   display: @main-display;
   flex-direction: row;
@@ -26,7 +27,7 @@
   .add-to-cart {
     font: @main-text;
     color: #fff;
-    font-size: 2vh;
+    font-size: 18px;
 
     &:hover {
       color: #F77272;

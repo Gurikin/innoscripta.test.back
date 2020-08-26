@@ -19,37 +19,37 @@ class Order
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $surname;
+    private $surname;
 
     /**
      * @ORM\Column(type="text")
      */
-    private string $address;
+    private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $phone;
+    private $phone;
 
     /**
      * @ORM\Column(type="float")
      */
-    private float $productsCost;
+    private $productsCost;
 
     /**
      * @ORM\Column(type="float")
      */
-    private float $deliveryCost;
+    private $deliveryCost;
 
 
 

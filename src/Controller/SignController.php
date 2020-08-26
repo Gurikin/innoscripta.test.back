@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,23 +11,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SignController extends AbstractController
 {
     /**
-     * @Route("/signin", name="sign_in")
-     */
-    public function signIn()
-    {
-        return $this->render('sign/signin.html.twig', [
-            'controller_name' => 'SignController',
-        ]);
-    }
-
-    /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+         if ($this->getUser()) {
+             return $this->redirectToRoute('index');
+         }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -41,6 +34,6 @@ class SignController extends AbstractController
      */
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

@@ -132,6 +132,10 @@ class User implements UserInterface
         return $this->customers;
     }
 
+    /**
+     * @param Customer $customer
+     * @return $this
+     */
     public function addCustomer(Customer $customer): self
     {
         if (!$this->customers->contains($customer)) {
@@ -142,6 +146,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Customer $customer
+     * @return $this
+     */
     public function removeCustomer(Customer $customer): self
     {
         if ($this->customers->contains($customer)) {

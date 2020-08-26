@@ -17,7 +17,7 @@ class IndexController extends AbstractController
     final public function index(): Response
     {
       $pizzaList = $this->getDoctrine()->getRepository(Product::class)->findByProductType(ProductType::PIZZA_TYPE);
-      return $this->render('base.html.twig', ['products' => $pizzaList]);
+      return $this->render('shop/pizza_list.html.twig', ['products' => $pizzaList]);
     }
 
     /**

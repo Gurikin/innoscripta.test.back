@@ -1,26 +1,33 @@
 {% block header %}
-<header class="header">
-    <div class='header-container'>
-        <a href='#' class='navbar-brand ml-5 logo' onclick="request('GET', '{{ url('get_pizza_list') }}');">
-            <img src="{{ asset('images/menu/logo.png') }}" alt=''/>
-        </a>
-        <div class='menu'>
-            <nav class='ml-auto'>
-                <ul>
-                    <li class='mr-4'>
-                        <span id="productInCartCount" onload="updateProductInCartCount();"></span>
-                        <a href="#" class='a' onclick="request('GET', '{{ url('cart') }}');">
-                            <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li class='mr-4'>
-                        <a href="#" class='a' onclick="request('GET', '{{ url('sign_in') }}');">
-                            <i class="fa fa-user fa-3x" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+    <header class="header">
+        <div class='header-container'>
+            <a href='/' class='navbar-brand ml-5 logo'>
+                <img src="{{ asset('images/menu/logo.png') }}" alt=''/>
+            </a>
+            <div class='menu'>
+                <nav class='ml-auto'>
+                    <ul>
+                        <li class='mr-4'>
+                            <span id="productInCartCount" onload="updateProductInCartCount();"></span>
+                            <a href="#" class='a' onclick="request('GET', '{{ url('cart') }}');">
+                                <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class='mr-4'>
+                            {% if app.user %}
+                                {% set uri = url('app_logout') %}
+                                {% set faClass = 'fas fa-sign-out-alt fa-3x' %}
+                            {% else %}
+                                {% set uri = url('app_login') %}
+                                {% set faClass = 'fa fa-user fa-3x' %}
+                            {% endif %}
+                            <a href="{{ uri }}" class='a'>
+                                <i class="{{ faClass }}" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 {% endblock %}
