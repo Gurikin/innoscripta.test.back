@@ -13,6 +13,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class CustomerSubscriber implements EventSubscriberInterface
 {
+    private const NO_CHECK_TOKEN_URI = ['order-success', '/cart/count'];
+
     private EntityManagerInterface $em;
 
     /**
@@ -29,9 +31,10 @@ class CustomerSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (strpos($request->getRequestUri(), 'order-success') !== false ||
-            strpos($request->getRequestUri(), '/cart/count') !== false) {
-            return true;
+        foreach (self::NO_CHECK_TOKEN_URI as $uri) {
+            if (strpos($request->getRequestUri(), $uri) !== false) {
+                return true;
+            }
         }
 
         if (!$token = $request->getSession()->get('customerToken')) {
@@ -62,7 +65,7 @@ class CustomerSubscriber implements EventSubscriberInterface
     {
         try {
             $customer = new Customer();
-            $token = sha1($request->getClientIp() . $request->getSession()->getName());
+            $token = sha1($request->getClientIp() . $request->getSession()->getId() . microtime());
             $customer->setToken($token);
 
             $this->em->persist($customer);
