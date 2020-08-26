@@ -10,16 +10,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SignController extends AbstractController
 {
     /**
-     * @Route("/signin", name="sign_in")
-     */
-    public function signIn()
-    {
-        return $this->render('sign/signin.html.twig', [
-            'controller_name' => 'SignController',
-        ]);
-    }
-
-    /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
