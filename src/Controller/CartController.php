@@ -7,6 +7,7 @@ use App\Entity\CartProduct;
 use App\Entity\Product;
 use App\Model\CartProductCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,9 +46,9 @@ class CartController extends AbstractController
         $cartProductsWithoutGrouping = $cart->getCartProducts();
         $cartProducts = (new CartProductCollection($cartProductsWithoutGrouping))->getCartProductCollection();
         return $this->render('cart/cart.html.twig', [
-            'cartProducts' => $cartProducts,
+            'cartProducts'           => $cartProducts,
             'totalCartProductsCount' => count($cartProductsWithoutGrouping),
-            'totalPrice' => $cart->getTotalPrice()
+            'totalPrice'             => $cart->getTotalPrice()
         ]);
     }
 
@@ -89,11 +90,17 @@ class CartController extends AbstractController
      * @Route("/cart/count", name="product_in_cart_count", methods={"GET"})
      * @param Request $request
      * @return JsonResponse
+     * @throw ORMException
      */
     public function getProductsInCartCount(Request $request): JsonResponse
     {
-        $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
-        $productsInCartCount = count($cart->getCartProducts());
+        try {
+            $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
+            $productsInCartCount = count($cart->getCartProducts());
+        } catch (ORMException|RuntimeException $e) {
+            $productsInCartCount = 0;
+        }
+
         return $this->json(['productInCartCount' => $productsInCartCount], Response::HTTP_OK);
     }
 

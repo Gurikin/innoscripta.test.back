@@ -1,5 +1,5 @@
 {% block body %}
-    <div class='cart-container m-4'>
+    <div class='cart-container ml-auto mr-auto mt-4 mb-4'>
         {% for cartProduct in cartProducts %}
             {{ include('cart/cart_product.html.twig', {'cartProduct':cartProduct}) }}
         {% endfor %}

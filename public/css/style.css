@@ -23,7 +23,7 @@ body {
 }
 .cart-container {
   background-color: #231F20;
-  width: 1200px;
+  max-width: 60%;
   display: flex;
   flex-direction: column;
   flex: auto;
@@ -203,6 +203,16 @@ body {
 .product:hover {
   transform: scale(1.1);
   border-radius: 120px;
+}
+
+.product .add-to-cart {
+  font: 14px Roboto white;
+  color: #fff;
+  font-size: 2vh;
+}
+
+.product .add-to-cart:hover {
+  color: #F77272;
 }
 .shop-container {
   background-color: #231F20;
