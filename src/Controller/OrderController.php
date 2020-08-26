@@ -72,12 +72,12 @@ class OrderController extends AbstractController
 
             $order->setCustomer($customer);
 
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUsername()]);
-            if (null !== $user) {
+            if (null !== $this->getUser()) {
+                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUsername()]);
                 $user->addCustomer($customer);
+                $this->em->persist($user);
             }
 
-            $this->em->persist($user);
             $this->em->persist($order);
 
             $this->em->flush();
@@ -87,6 +87,7 @@ class OrderController extends AbstractController
         }
 
         $request->getSession()->remove('customerToken');
+        $request->getSession()->remove('cartId');
 
         $totalPrice = $order->getProductsCost() + $order->getDeliveryCost();
         return $this->redirectToRoute('order_success', ['totalPrice' => $totalPrice]);
