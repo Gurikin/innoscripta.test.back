@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="order-success mt-5">
+        <h3>Your order was create success full!</h3>
+        <h4>We already work for delivery your pizza at time</h4>
+        <h5>Total cost: {{ totalPrice }}$/{{ totalPrice }}€</h5>
+        <a href="{{ url('index') }}" class='navbar-brand mt-5 logo'>
+            <img src="{{ asset('images/menu/logo.png') }}" alt=''/>
+        </a>
+    </div>
+{% endblock %}
+

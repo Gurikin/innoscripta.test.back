@@ -1,9 +1,10 @@
 {% block body %}
-    <div class='cart-container m-4'>
+    <div class='cart-container ml-auto mr-auto mt-4 mb-4'>
         {% for cartProduct in cartProducts %}
             {{ include('cart/cart_product.html.twig', {'cartProduct':cartProduct}) }}
         {% endfor %}
         <div class='cart-score'>
+            <a href="{{ url('order') }}" type="button" class="btn btn-dark  ml-3 mr-auto text-capitalize">To Order</a>
             <b class="score ml-auto mr-3">TOTAL PRICE: {{ totalPrice }}$/{{ totalPrice }}€</b>
         </div>
     </div>

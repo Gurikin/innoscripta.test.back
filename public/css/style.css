@@ -23,7 +23,7 @@ body {
 }
 .cart-container {
   background-color: #231F20;
-  width: 1200px;
+  max-width: 60%;
   display: flex;
   flex-direction: column;
   flex: auto;
@@ -78,7 +78,7 @@ body {
 
 .cart-product .score,
 .cart-score .score {
-  position: relative;
+  justify-content: space-between;
   font: 14px Roboto white;
   font-size: 24px;
   font-weight: bold;
@@ -155,6 +155,35 @@ body {
   border-radius: 20px;
   text-align: center;
 }
+.form-container {
+  background-color: #231F20;
+  width: 100%;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #999999;
+  font: 14px Roboto white;
+  font-size: 24px;
+}
+
+.form-container button {
+  font-size: 24px;
+}
+.order-success {
+  flex: auto;
+  color: #999999;
+  font: 14px Roboto white;
+}
+
+.order-success .logo {
+  color: #999999;
+}
+
+.order-success .logo:hover {
+  color: #ffffff;
+}
 .product {
   width: 500px;
   height: 250px;
@@ -174,6 +203,16 @@ body {
 .product:hover {
   transform: scale(1.1);
   border-radius: 120px;
+}
+
+.product .add-to-cart {
+  font: 14px Roboto white;
+  color: #fff;
+  font-size: 2vh;
+}
+
+.product .add-to-cart:hover {
+  color: #F77272;
 }
 .shop-container {
   background-color: #231F20;

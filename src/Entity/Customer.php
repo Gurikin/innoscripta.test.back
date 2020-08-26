@@ -41,6 +41,11 @@ class Customer
     private Cart $cart;
 
     /**
+     * @ORM\OneToOne(targetEntity=Order::class, mappedBy="customer", cascade={"persist", "remove"})
+     */
+    private $pizzaOrder;
+
+    /**
      * Customer constructor.
      */
     public function __construct()
@@ -99,6 +104,23 @@ class Customer
     public function setCart(Cart $cart): self
     {
         $this->cart = $cart;
+
+        return $this;
+    }
+
+    public function getPizzaOrder(): ?Order
+    {
+        return $this->pizzaOrder;
+    }
+
+    public function setPizzaOrder(Order $pizzaOrder): self
+    {
+        $this->pizzaOrder = $pizzaOrder;
+
+        // set the owning side of the relation if necessary
+        if ($pizzaOrder->getCustomer() !== $this) {
+            $pizzaOrder->setCustomer($this);
+        }
 
         return $this;
     }
