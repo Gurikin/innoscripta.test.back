@@ -19,17 +19,17 @@ class Cart
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="float", name="total_price")
      */
-    private float $totalPrice = 0.0;
+    private $totalPrice = 0.0;
 
     /**
      * @ORM\Column(type="datetime", name="created_at")
      */
-    private DateTimeInterface $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="cart")
@@ -74,12 +74,12 @@ class Cart
     /**
      * @return Collection|CartProduct[]
      */
-    public function getCartProducts(): Collection
+    public function getCartProducts()
     {
         return $this->cartProducts;
     }
 
-    public function addProduct(CartProduct $cartProduct): self
+    public function addProduct(CartProduct $cartProduct)
     {
         if (!$this->cartProducts->contains($cartProduct)) {
             $this->cartProducts[] = $cartProduct;
@@ -88,7 +88,7 @@ class Cart
         return $this;
     }
 
-    public function removeProduct(CartProduct $cartProduct): self
+    public function removeProduct(CartProduct $cartProduct)
     {
         if (!$this->cartProducts->contains($cartProduct)) {
             return $this;

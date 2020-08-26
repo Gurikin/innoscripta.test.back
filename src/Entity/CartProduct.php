@@ -15,19 +15,19 @@ class CartProduct
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cartProducts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private Cart $cart;
+    private $cart;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="addedToCarts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private Product $product;
+    private $product;
 
     public function getId(): ?int
     {
