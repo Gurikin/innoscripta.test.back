@@ -36,7 +36,7 @@ class CartController extends AbstractController
 
 
     /**
-     * @Route("/cart", name="cart", methods={"GET"}, schemes={"https"})
+     * @Route("/cart", name="cart", methods={"GET"})
      * @param Request $request
      * @return Response
      */

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SignController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login", schemes={"https"})
+     * @Route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
@@ -30,7 +30,7 @@ class SignController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout", schemes={"https"})
+     * @Route("/logout", name="app_logout")
      */
     public function logout()
     {

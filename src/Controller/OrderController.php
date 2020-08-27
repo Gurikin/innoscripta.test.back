@@ -30,7 +30,7 @@ class OrderController extends AbstractController
 
 
     /**
-     * @Route("/order", name="order", methods={"GET"}, schemes={"https"})
+     * @Route("/order", name="order", methods={"GET"})
      */
     public function index()
     {
@@ -41,7 +41,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/order", name="save_order", methods={"POST"}, schemes={"https"})
+     * @Route("/order", name="save_order", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -94,7 +94,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/order-success", name="order_success", methods={"GET"}, schemes={"https"})
+     * @Route("/order-success", name="order_success", methods={"GET"})
      * @param Request $request
      * @return Response
      */

@@ -12,7 +12,7 @@ use App\Entity\Product;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="index", schemes={"https"})
+     * @Route("/", name="index")
      */
     final public function index(): Response
     {
@@ -21,7 +21,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/getPizzas", name="get_pizza_list", schemes={"https"})
+     * @Route("/getPizzas", name="get_pizza_list")
      */
     final public function getPizzas(): Response
     {
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/getToppings", name="get_topping_list", schemes={"https"})
+     * @Route("/getToppings", name="get_topping_list")
      */
     final public function getToppings(): JsonResponse
     {
