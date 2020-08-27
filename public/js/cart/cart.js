@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    updateProductInCartCount(baseUrl + 'cart')
+    if (document.documentURI.search('cart') === -1) {
+        console.log('update cart count');
+        updateProductInCartCount(baseUrl + 'cart')
+    }
 });
-// document.onload(function () {
-//     updateProductInCartCount(baseUrl + 'cart/')
-// });
 
 function putProductToCart(productId, requestUrl) {
     $.ajax({
