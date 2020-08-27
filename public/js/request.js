@@ -1,4 +1,4 @@
-let baseUrl = 'http://innoscripta.test/';
+let baseUrl = 'https://innoscripta-test.herokuapp.com/';
 
 function request(method, requestUrl) {
     $.ajax({
