@@ -1,4 +1,4 @@
-let baseUrl = 'http://localhost/';
+let baseUrl = 'http://innoscripta.test/';
 
 function request(method, requestUrl) {
     $.ajax({
