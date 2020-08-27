@@ -1,4 +1,4 @@
-let baseUrl = 'https://innoscripta-test.herokuapp.com/';
+var $ = require('jquery');
 
 function request(method, requestUrl) {
     $.ajax({

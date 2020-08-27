@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (document.documentURI.search('cart') === -1) {
         console.log('update cart count');
+        let baseUrl = 'https://innoscripta-test.herokuapp.com/';
         updateProductInCartCount(baseUrl + 'cart')
     }
 });
 
 function putProductToCart(productId, requestUrl) {
-    $.ajax({
+    $.ajax(requestUrl + '/' + productId, {
         type: "PUT",
-        url: requestUrl + '/' + productId,
         success: function (msg) {
             console.log(msg);
             updateProductInCartCount(requestUrl);
@@ -41,9 +41,8 @@ function deleteProductFromCart(productId, requestUrl) {
 }
 
 function updateProductInCartCount(requestUrl) {
-    $.ajax({
+    $.ajax(requestUrl + '/count', {
         type: "GET",
-        url: requestUrl + '/count',
         success: function (msg) {
             $("#productInCartCount").text(msg.productInCartCount);
         }
