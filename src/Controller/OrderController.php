@@ -6,7 +6,7 @@ use App\Entity\Cart;
 use App\Entity\Customer;
 use App\Entity\Order;
 use App\Entity\User;
-use App\Model\Type\OrderType;
+use App\Form\OrderFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +34,7 @@ class OrderController extends AbstractController
      */
     public function index()
     {
-        $orderForm = $this->createForm(OrderType::class);
+        $orderForm = $this->createForm(OrderFormType::class);
         return $this->render('order/order-form.html.twig', [
             'orderForm' => $orderForm->createView(),
         ]);
@@ -51,7 +51,7 @@ class OrderController extends AbstractController
         // just setup a fresh $task object (remove the example data)
         $order = new Order();
 
-        $orderForm = $this->createForm(OrderType::class, $order);
+        $orderForm = $this->createForm(OrderFormType::class, $order);
 
         $orderForm->handleRequest($request);
         if (!$orderForm->isSubmitted() || !$orderForm->isValid()) {
