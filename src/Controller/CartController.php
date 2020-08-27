@@ -36,7 +36,7 @@ class CartController extends AbstractController
 
 
     /**
-     * @Route("/cart", name="cart", methods={"GET"})
+     * @Route("/cart", name="cart", methods={"GET"}, schemes={"https"})
      * @param Request $request
      * @return Response
      */
@@ -54,7 +54,7 @@ class CartController extends AbstractController
 
 
     /**
-     * @Route("/cart/{productId}", name="put_product_to_cart", methods={"PUT"})
+     * @Route("/cart/{productId}", name="put_product_to_cart", methods={"PUT"}, schemes={"https"})
      * @param Request $request
      * @param int|null $productId
      * @param ValidatorInterface $validator
@@ -87,7 +87,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/count", name="product_in_cart_count", methods={"GET"})
+     * @Route("/cart/count", name="product_in_cart_count", methods={"GET"}, schemes={"https"})
      * @param Request $request
      * @return JsonResponse
      * @throw ORMException
@@ -105,7 +105,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/{productId}", name="delete_product_from_cart", methods={"DELETE"})
+     * @Route("/cart/{productId}", name="delete_product_from_cart", methods={"DELETE"}, schemes={"https"})
      * @param Request $request
      * @param int $productId
      * @param ValidatorInterface $validator
