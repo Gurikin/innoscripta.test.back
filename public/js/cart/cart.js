@@ -45,6 +45,7 @@ function updateProductInCartCount(requestUrl) {
     $.ajax({
         type: "GET",
         url: requestUrl + '/count',
+        headers: {"Access-Control-Allow-Origin": "*"},
         success: function (msg) {
             $("#productInCartCount").text(msg.productInCartCount);
         }
