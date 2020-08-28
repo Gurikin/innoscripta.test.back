@@ -4,8 +4,10 @@ function request(method, requestUrl) {
     $.ajax({
         type: method,
         url: requestUrl,
-        success: function (msg) {
-            $(".main-container").html(msg);
-        }
+        headers: {"Access-Control-Allow-Origin": "*"}
+    }).done(function (msg) {
+        $(".main-container").html(msg);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
     });
 }
