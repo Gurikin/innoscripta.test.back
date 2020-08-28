@@ -7,8 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function putProductToCart(productId, requestUrl) {
-    $.ajax(requestUrl + '/' + productId, {
+    $.ajax({
         type: "PUT",
+        url: requestUrl + '/' + productId,
         success: function (msg) {
             console.log(msg);
             updateProductInCartCount(requestUrl);
@@ -41,8 +42,9 @@ function deleteProductFromCart(productId, requestUrl) {
 }
 
 function updateProductInCartCount(requestUrl) {
-    $.ajax(requestUrl + '/count', {
+    $.ajax({
         type: "GET",
+        url: requestUrl + '/count',
         success: function (msg) {
             $("#productInCartCount").text(msg.productInCartCount);
         }
