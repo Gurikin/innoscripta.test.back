@@ -1,7 +1,7 @@
 {% block body %}
     <div class='cart-container ml-auto mr-auto mt-4 mb-4'>
         {% for order in orders %}
-            {{ include('user/order-history.html.twig', {'orderHistoryItem':orderHistoryItem}) }}
+            {{ include('user/order-history.html.twig', {'orderHistoryItem':order}) }}
         {% endfor %}
         <div class='cart-score'>
             <b class="score ml-auto mr-3">You are with us from {{ ordersRange.from }} to {{ ordersRange.to }}</b>

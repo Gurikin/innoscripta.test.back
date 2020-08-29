@@ -29,7 +29,7 @@ class UserController extends AbstractController
     public function getOrderHistory(): Response
     {
         if (null === $this->getUser()) {
-            return $this->redirectToRoute('index', [], Response::HTTP_UNAUTHORIZED);
+            return $this->redirectToRoute('index');
         }
 
         /** @var User $user */
