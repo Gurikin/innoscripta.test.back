@@ -4,45 +4,23 @@
 namespace App\Model;
 
 
-use App\Entity\Cart;
 use App\Entity\CartProduct;
-use App\Entity\Product;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 
-final class CartProductCollection
+final class CartProductCollection extends AbstractDtoCollection
 {
-    private ArrayCollection $cartProductCollection;
-
-    /**
-     * CartProductCollection constructor.
-     * @param PersistentCollection $sourceCartProductCollection
-     */
-    public function __construct(PersistentCollection $sourceCartProductCollection)
-    {
-        $this->cartProductCollection = new ArrayCollection();
-        $this->convertCartProductCollection($sourceCartProductCollection);
-    }
-
-    public function getCartProductCollection(): array
-    {
-        $resultCollection = $this->cartProductCollection->getValues();
-        ksort($resultCollection);
-        return $resultCollection;
-    }
-
-    private function convertCartProductCollection(PersistentCollection $sourceCartProductCollection)
+    protected function convertCollection(Collection $sourceCartProductCollection)
     {
         /** @var CartProduct $cartProduct */
         foreach ($sourceCartProductCollection as $cartProduct) {
             $cartProductId = $cartProduct->getProduct()->getId();
 
-            if (in_array($cartProductId, $this->cartProductCollection->getKeys())) {
-                $this->cartProductCollection->get($cartProductId)->incrementProductCount();
+            if (in_array($cartProductId, $this->collection->getKeys())) {
+                $this->collection->get($cartProductId)->incrementProductCount();
                 continue;
             }
 
-            $this->cartProductCollection->set($cartProductId, new CartProductDto($cartProduct));
+            $this->collection->set($cartProductId, new CartProductDto($cartProduct));
         }
     }
 }

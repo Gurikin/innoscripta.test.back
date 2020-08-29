@@ -44,7 +44,7 @@ class CartController extends AbstractController
     {
         $cart = $this->em->getRepository(Cart::class)->find($request->getSession()->get('cartId'));
         $cartProductsWithoutGrouping = $cart->getCartProducts();
-        $cartProducts = (new CartProductCollection($cartProductsWithoutGrouping))->getCartProductCollection();
+        $cartProducts = (new CartProductCollection($cartProductsWithoutGrouping))->getCollection();
         return $this->render('cart/cart.html.twig', [
             'cartProducts'           => $cartProducts,
             'totalCartProductsCount' => count($cartProductsWithoutGrouping),
