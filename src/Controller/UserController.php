@@ -26,10 +26,10 @@ class UserController extends AbstractController
     /**
      * @Route("/user/order-history", name="user_order_history", methods={"GET"})
      */
-    public function getOrderHistory(): JsonResponse
+    public function getOrderHistory(): Response
     {
         if (null === $this->getUser()) {
-            return $this->json(['error' => 'Unauthorized user try to get orders history.'], Response::HTTP_UNAUTHORIZED);
+            return $this->redirectToRoute('index', [], Response::HTTP_UNAUTHORIZED);
         }
 
         /** @var User $user */
@@ -38,7 +38,7 @@ class UserController extends AbstractController
 
         $ordersHistoryCollection = new OrderHistoryDtoCollection($customers);
 
-        return $this->json([
+        return $this->render('user/order-history.html.twig', [
             'orders'      => $ordersHistoryCollection->getCollection(),
             'ordersRange' => $ordersHistoryCollection->getRangeOfOrdersHistory(),
             'totalPrice'  => $ordersHistoryCollection->getTotalPrice()

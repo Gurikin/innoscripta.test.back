@@ -1,0 +1,13 @@
+{% block orderHistoryItem %}
+    <div class='cart-product ml-3 mr-3' id="{{ orderHistoryItem.id }}">
+        <div class="title mr-auto ml-auto">
+            <span>Number of order: {{ orderHistoryItem.product.name }}</span>
+        </div>
+        <div class="count mr-auto ml-auto">
+            <span>Ordered at: {{ orderHistoryItem.createdAt }}</span>
+        </div>
+        <div class="count mr-auto ml-auto">
+            <span>Order total price: {{ orderHistoryItem.createdAt }}</span>
+        </div>
+    </div>
+{% endblock %}
