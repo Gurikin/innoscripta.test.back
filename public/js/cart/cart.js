@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (document.documentURI.search('cart') === -1) {
         console.log('update cart count');
-        let baseUrl = 'https://innoscripta-test.herokuapp.com/';
+        let baseUrl = 'http://innoscripta-test.herokuapp.com/';
         updateProductInCartCount(baseUrl + 'cart')
     }
 });
