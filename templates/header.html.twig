@@ -15,6 +15,9 @@
                         </li>
                         <li class='mr-4'>
                             {% if app.user %}
+                                <a href="#" class='a' onclick="request('GET', '{{ url('user_order_history') }}')">
+                                    <i class="fas fa-history fa-3x"></i>
+                                </a>
                                 {% set uri = url('app_logout') %}
                                 {% set faClass = 'fas fa-sign-out-alt fa-3x' %}
                                 {% set text = 'logout' %}
