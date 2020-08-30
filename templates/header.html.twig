@@ -15,7 +15,7 @@
                         </li>
                         {% if app.user %}
                             <li class='mr-4'>
-                                <a href="{{ url('user_order_history') }}" class='a'>
+                                <a href="#" class='a' onclick="request('GET', '{{ url('user_order_history') }}')">
                                     <i class="fas fa-history fa-3x"></i>
                                 </a>
                             </li>
