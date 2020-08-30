@@ -5,7 +5,7 @@
         {% endfor %}
         <div class='cart-score'>
             <a href="{{ url('order') }}" type="button" class="btn btn-dark  ml-3 mr-auto text-capitalize">To Order</a>
-            <b class="score ml-auto mr-3">TOTAL PRICE: {{ totalPrice }}$/{{ totalPrice }}€</b>
+            <b class="score ml-auto mr-3">TOTAL PRICE: {{ totalPrice|format_currency('EUR') }}/{{ totalPrice|price('USD')|format_currency('USD') }}</b>
         </div>
     </div>
 {% endblock %}

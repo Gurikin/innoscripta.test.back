@@ -7,7 +7,7 @@
             <span>Ordered at: {{ orderHistoryItem.orderedAt|date('m/d/Y H:i:s') }}</span>
         </div>
         <div class="count mr-auto ml-auto">
-            <span>Order total price: {{ orderHistoryItem.orderPrice }}</span>
+            <span>Order total price: {{ orderHistoryItem.orderPrice|format_currency('EUR') }}/{{ orderHistoryItem.orderPrice|price('USD')|format_currency('USD') }}</span>
         </div>
     </div>
 {% endblock %}
