@@ -37,11 +37,12 @@ class UserController extends AbstractController
         $customers = $user->getCustomers();
 
         $ordersHistoryCollection = new OrderHistoryDtoCollection($customers);
+//        dd($ordersHistoryCollection);
 
         return $this->render('user/order-history.html.twig', [
-            'orders'      => $ordersHistoryCollection->getCollection(),
-            'ordersRange' => $ordersHistoryCollection->getRangeOfOrdersHistory(),
-            'totalPrice'  => $ordersHistoryCollection->getTotalPrice()
+            'orderHistoryItems' => $ordersHistoryCollection->getCollection(),
+            'ordersRange'       => $ordersHistoryCollection->getRangeOfOrdersHistory(),
+            'totalOrdersPrice'  => $ordersHistoryCollection->getTotalOrdersPrice()
         ]);
     }
 }

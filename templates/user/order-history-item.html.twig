@@ -4,10 +4,10 @@
             <span>Number of order: {{ orderHistoryItem.id }}</span>
         </div>
         <div class="count mr-auto ml-auto">
-            <span>Ordered at: {{ orderHistoryItem.createdAt }}</span>
+            <span>Ordered at: {{ orderHistoryItem.orderedAt|date('m/d/Y H:i:s') }}</span>
         </div>
         <div class="count mr-auto ml-auto">
-            <span>Order total price: {{ orderHistoryItem.createdAt }}</span>
+            <span>Order total price: {{ orderHistoryItem.orderPrice }}</span>
         </div>
     </div>
 {% endblock %}
