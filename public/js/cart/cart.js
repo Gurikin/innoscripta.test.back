@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    updateProductInCartCount(baseUrl + 'cart')
+    if (document.documentURI.search('cart') === -1) {
+        console.log('update cart count');
+        let baseUrl = 'http://innoscripta-test.herokuapp.com/';
+        updateProductInCartCount(baseUrl + 'cart')
+    }
 });
-// document.onload(function () {
-//     updateProductInCartCount(baseUrl + 'cart/')
-// });
 
 function putProductToCart(productId, requestUrl) {
     $.ajax({
@@ -44,8 +45,13 @@ function updateProductInCartCount(requestUrl) {
     $.ajax({
         type: "GET",
         url: requestUrl + '/count',
-        success: function (msg) {
-            $("#productInCartCount").text(msg.productInCartCount);
+        headers: {"Access-Control-Allow-Origin": "*"},
+        before: function( xhr ) {
+            xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
         }
+    }).done(function (msg) {
+        $("#productInCartCount").text(msg.productInCartCount);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
     });
 }

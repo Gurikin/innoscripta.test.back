@@ -7,7 +7,7 @@
         <button
                 onClick="putProductToCart({{ product.id }}, '{{ url('cart') }}');"
                 class="btn btn-dark add-to-cart pull-right">
-            <span>{{ product.price }}$/{{ product.price }}€</span>
+            <span>{{ product.price|format_currency('EUR') }}/{{ product.price|price('USD')|format_currency('USD') }}</span>
         </button>
     </div>
 {% endblock %}

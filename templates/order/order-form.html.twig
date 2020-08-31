@@ -23,5 +23,7 @@
             {{ form_row(orderForm.submit) }}
         </div>
         {{ form_end(orderForm) }}
+
+        <span>We need notify You that delivery cost is {{ 5.0|format_currency('EUR') }}/{{ 5.0|price('USD')|format_currency('USD') }}</span>
     </div>
 {% endblock %}

@@ -1,0 +1,23 @@
+{#{% extends 'base.html.twig' %}#}
+{% block body %}
+    <div class='cart-container ml-auto mr-auto mt-4 mb-4'>
+        {% if orderHistoryItems|length >= 1 %}
+            {% for orderHistoryItem in orderHistoryItems %}
+                {{ include('user/order-history-item.html.twig', {'orderHistoryItem':orderHistoryItem}) }}
+            {% endfor %}
+        {% else %}
+            <div class='cart-score'>
+                <div class="score mr-auto ml-auto">
+                    Look like you haven't any completed orders. Time to try it!
+                </div>
+            </div>
+        {% endif %}
+        <div class='cart-score'>
+            <b class="score ml-auto mr-3">Thanks! You being with us from {{ ordersRange.from|date('m/d/Y') }}</b>
+        </div>
+        <div class='cart-score'>
+            <b class="score ml-auto mr-3">Total orders price: {{ totalOrdersPrice|format_currency('EUR') }}
+                /{{ totalOrdersPrice|price('USD')|format_currency('USD') }}</b>
+        </div>
+    </div>
+{% endblock %}

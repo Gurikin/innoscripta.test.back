@@ -13,27 +13,27 @@
                                 <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
                             </a>
                         </li>
+                        {% if app.user %}
+                            <li class='mr-4'>
+                                <a href="#" class='a' onclick="request('GET', '{{ url('user_order_history') }}')">
+                                    <i class="fas fa-history fa-3x"></i>
+                                </a>
+                            </li>
+                            {% set uri = url('app_logout') %}
+                            {% set faClass = 'fas fa-sign-out-alt fa-3x' %}
+                            {% set text = 'logout' %}
+                        {% elseif app.request.uri == url('app_login') %}
+                            {% set uri = url('app_register') %}
+                            {% set faClass = 'fas fa-user-plus fa-3x' %}
+                            {% set text = 'register' %}
+                        {% else %}
+                            {% set uri = url('app_login') %}
+                            {% set faClass = 'fa fa-user fa-3x' %}
+                            {% set text = 'login' %}
+                        {% endif %}
                         <li class='mr-4'>
-                            {% if app.user %}
-                                {% set uri = url('app_logout') %}
-                                {% set faClass = 'fas fa-sign-out-alt fa-3x' %}
-                                {% set text = 'logout' %}
-                            {% elseif app.request.uri == 'http://localhost/login' %}
-                                {% set uri = url('app_register') %}
-                                {% set faClass = 'fas fa-user-plus fa-3x' %}
-                                {% set text = 'register' %}
-                            {% else %}
-                                {% set uri = url('app_login') %}
-                                {% set faClass = 'fa fa-user fa-3x' %}
-                                {% set text = 'login' %}
-                            {% endif %}
                             <a href="{{ uri }}" class='a'>
                                 <i class="{{ faClass }}" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class='mr-4'>
-                            <a href="{{ url('app_register') }}" class='a'>
-                                <i class=""></i>
                             </a>
                         </li>
                     </ul>
